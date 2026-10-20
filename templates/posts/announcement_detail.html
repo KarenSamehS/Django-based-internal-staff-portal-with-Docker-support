@@ -1,0 +1,23 @@
+
+{% extends "base.html" %}
+
+{% block title %}{{ announcement.title }} | StaffConnect{% endblock %}
+
+{% block content %}
+    <article>
+        <h1>{{ announcement.title }}</h1>
+
+        <p class="grey-text">
+            Posted by {{ announcement.author.username }}
+            on {{ announcement.created_at|date:"M j, Y" }}
+        </p>
+
+        <div class="flow-text">
+            {{ announcement.body|linebreaks }}
+        </div>
+
+        <a href="{% url 'announcement-list' %}">
+            Back to Announcements
+        </a>
+    </article>
+{% endblock %}

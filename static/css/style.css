@@ -1,0 +1,73 @@
+
+/* StaffConnect — global styles */
+
+:root {
+    --staff-primary: #00796b;
+    --staff-primary-dark: #004d40;
+    --staff-background: #f5f7f8;
+    --staff-text: #263238;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    background-color: var(--staff-background);
+    color: var(--staff-text);
+    font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
+}
+
+main.page-content {
+    flex: 1;
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+}
+
+nav {
+    line-height: 64px;
+}
+
+nav .brand-logo {
+    font-size: 1.65rem;
+    font-weight: 600;
+    letter-spacing: -0.4px;
+}
+
+nav ul a {
+    transition: background-color 0.2s ease;
+}
+
+nav ul a:hover {
+    background-color: #e0f2f1;
+}
+
+.nav-logout-form,
+.mobile-logout-form {
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+}
+
+.nav-logout-form button {
+    height: 64px;
+}
+
+.page-footer {
+    border-top: 1px solid #e0e0e0;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.page-footer p {
+    font-size: 0.9rem;
+}
+
+@media (max-width: 600px) {
+    nav .brand-logo {
+        font-size: 1.4rem;
+    }
+
+    main.page-content {
+        padding-top: 1.25rem;
+    }
+}

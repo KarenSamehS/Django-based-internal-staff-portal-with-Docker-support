@@ -1,0 +1,15 @@
+
+{% extends "base.html" %}
+
+{% block title %}Page Not Found | StaffConnect{% endblock %}
+
+{% block content %}
+    <div class="center-align section">
+        <h1 class="teal-text text-darken-2">404</h1>
+        <h4>Page not found</h4>
+        <p>Sorry, we couldn't find the page you're looking for.</p>
+        <a href="{% url 'home' %}" class="btn waves-effect waves-light teal darken-2">
+            Back to Home
+        </a>
+    </div>
+{% endblock %}

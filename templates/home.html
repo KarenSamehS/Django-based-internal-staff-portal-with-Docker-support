@@ -1,0 +1,41 @@
+
+{% extends "base.html" %}
+
+{% block title %}Home | StaffConnect{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col s12">
+            <h1>Welcome to StaffConnect</h1>
+            <p>Your internal employee portal.</p>
+        </div>
+    </div>
+
+    <section aria-labelledby="announcements-heading">
+        <h2 id="announcements-heading">Latest Announcements</h2>
+
+        {% for announcement in announcements %}
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">{{ announcement.title }}</span>
+
+                    <p>
+                        {{ announcement.body|truncatechars:180 }}
+                    </p>
+
+                    <p class="grey-text text-darken-1">
+                        Published {{ announcement.created_at|date:"M j, Y" }}
+                    </p>
+                </div>
+
+                <div class="card-action">
+                    <a href="{{ announcement.get_absolute_url }}">
+                        Read announcement
+                    </a>
+                </div>
+            </div>
+        {% empty %}
+            <p>No announcements have been published yet.</p>
+        {% endfor %}
+    </section>
+{% endblock %}

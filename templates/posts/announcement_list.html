@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Announcements | StaffConnect{% endblock %}
+
+{% block content %}
+    <h1>Announcements</h1>
+
+    {% for announcement in announcements %}
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">
+                    {{ announcement.title }}
+                </span>
+
+                <p>{{ announcement.body|truncatechars:180 }}</p>
+
+                <p class="grey-text">
+                    Published {{ announcement.created_at|date:"M j, Y" }}
+                </p>
+            </div>
+
+            <div class="card-action">
+                <a href="{{ announcement.get_absolute_url }}">
+                    Read announcement
+                </a>
+            </div>
+        </div>
+    {% empty %}
+        <p>No announcements have been published yet.</p>
+    {% endfor %}
+{% endblock %}

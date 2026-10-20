@@ -1,0 +1,109 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="StaffConnect — your internal employee portal">
+    <title>{% block title %}StaffConnect{% endblock %}</title>
+
+    <!-- Materialize CSS -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+
+    <!-- StaffConnect global styles -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <nav class="white z-depth-1" aria-label="Main navigation">
+            <div class="nav-wrapper container">
+                <a href="{% url 'home' %}" class="brand-logo teal-text text-darken-2">
+                    StaffConnect
+                </a>
+
+                <a href="#" data-target="mobile-nav" class="sidenav-trigger teal-text">
+                    <i class="material-icons">menu</i>
+                </a>
+
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="{% url 'home' %}" class="grey-text text-darken-3">Home</a></li>
+                    <li>
+                        <a href="{% url 'announcement-list' %}" class="grey-text text-darken-3">
+                            Announcements
+                        </a>
+                    </li>
+                    {% if user.is_authenticated %}
+                        <li>
+                            <a href="/users/" class="grey-text text-darken-3">
+                                My Account
+                            </a>
+                        </li>
+                        <li>
+                            <form method="post" action="/users/logout/" class="nav-logout-form">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-flat teal-text text-darken-2">
+                                    Log out
+                                </button>
+                            </form>
+                        </li>
+                    {% else %}
+                        <li><a href="/users/login/" class="grey-text text-darken-3">Log in</a></li>
+                        <li><a href="/users/register/" class="btn waves-effect waves-light teal darken-2">Join StaffConnect</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+
+        <ul class="sidenav" id="mobile-nav">
+            <li><a href="/">Home</a></li>
+            <li><a href="/posts/">Announcements</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="/users/">My Account</a></li>
+                <li>
+                    <form method="post" action="/users/logout/" class="mobile-logout-form">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-flat">Log out</button>
+                    </form>
+                </li>
+            {% else %}
+                <li><a href="/users/login/">Log in</a></li>
+                <li><a href="/users/register/">Join StaffConnect</a></li>
+            {% endif %}
+        </ul>
+    </header>
+
+    <main class="container page-content">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="card-panel teal lighten-5 teal-text text-darken-4" role="status">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="page-footer white">
+        <div class="container grey-text text-darken-2">
+            <p>StaffConnect · Internal Employee Portal</p>
+        </div>
+    </footer>
+
+    <!-- Materialize JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidenavs = document.querySelectorAll('.sidenav');
+            M.Sidenav.init(sidenavs);
+        });
+    </script>
+</body>
+</html>
