@@ -1,10 +1,6 @@
 from django.contrib import admin
-
-# Register your models here.
-
-from django.contrib import admin
 from .models import Post
-
+# Register your models here.
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
@@ -12,3 +8,4 @@ class PostAdmin(admin.ModelAdmin):
     list_filter = ("is_published", "created_at")
     search_fields = ("title", "body", "author__username")
     prepopulated_fields = {"slug": ("title",)}
+    date_hierarchy = "created_at"
