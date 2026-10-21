@@ -4,38 +4,149 @@
 {% block title %}Home | StaffConnect{% endblock %}
 
 {% block content %}
-    <div class="row">
+<div class="row" style="margin-top: 32px; margin-bottom: 36px;">
+    <div class="col s12">
+        <div style="
+            background: #e0f2f1;
+            border-left: 5px solid #00897b;
+            border-radius: 8px;
+            padding: 28px 32px;
+        ">
+            <p style="
+                color: #00897b;
+                font-size: 13px;
+                font-weight: 600;
+                letter-spacing: 1.5px;
+                text-transform: uppercase;
+                margin: 0 0 10px;
+            ">
+                Your workplace, connected
+            </p>
+
+            <h1 style="
+                font-size: 2.5rem;
+                line-height: 1.2;
+                font-weight: 600;
+                margin: 0 0 12px;
+                color: #263238;
+            ">
+                Welcome to StaffConnect
+            </h1>
+
+            <p style="
+                font-size: 1.05rem;
+                color: #546e7a;
+                margin: 0;
+            ">
+                Your hub for company updates and announcements.
+            </p>
+        </div>
+    </div>
+</div>
+
+<section aria-labelledby="announcements-heading">
+    <div class="row" style="margin-bottom: 8px;">
         <div class="col s12">
-            <h1>Welcome to StaffConnect</h1>
-            <p>Your internal employee portal.</p>
+            <h2 id="announcements-heading" style="
+                font-size: 1.8rem;
+                font-weight: 600;
+                color: #263238;
+                margin: 0 0 6px;
+            ">
+                Latest Announcements
+            </h2>
+
+            <p class="grey-text text-darken-1" style="margin-top: 0;">
+                Stay up to date with what's happening.
+            </p>
         </div>
     </div>
 
-    <section aria-labelledby="announcements-heading">
-        <h2 id="announcements-heading">Latest Announcements</h2>
+    {% for announcement in announcements %}
+        <div class="card" style="
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+            margin-bottom: 18px;
+        ">
+            <div class="card-content" style="padding: 22px 24px;">
+                <span class="card-title" style="
+                    font-size: 1.35rem;
+                    font-weight: 600;
+                    color: #263238;
+                    margin-bottom: 12px;
+                ">
+                    {{ announcement.title }}
+                </span>
 
-        {% for announcement in announcements %}
-            <div class="card">
-                <div class="card-content">
-                    <span class="card-title">{{ announcement.title }}</span>
+                <p style="
+                    color: #546e7a;
+                    line-height: 1.7;
+                    overflow-wrap: anywhere;
+                ">
+                    {{ announcement.body|truncatechars:180 }}
+                </p>
 
-                    <p>
-                        {{ announcement.body|truncatechars:180 }}
-                    </p>
-
-                    <p class="grey-text text-darken-1">
-                        Published {{ announcement.created_at|date:"M j, Y" }}
-                    </p>
-                </div>
-
-                <div class="card-action">
-                    <a href="{{ announcement.get_absolute_url }}">
-                        Read announcement
-                    </a>
-                </div>
+                <p class="grey-text text-darken-1" style="
+                    font-size: 0.85rem;
+                    margin-top: 16px;
+                    margin-bottom: 0;
+                ">
+                    Published {{ announcement.created_at|date:"M j, Y" }}
+                </p>
             </div>
-        {% empty %}
-            <p>No announcements have been published yet.</p>
-        {% endfor %}
-    </section>
+
+            <div class="card-action" style="
+                background: #ffffff;
+                border-top: 1px solid #eeeeee;
+                padding: 14px 24px;
+            ">
+                <a href="{{ announcement.get_absolute_url }}"
+                   style="
+                       color: #00897b;
+                       font-weight: 600;
+                       margin-right: 0;
+                   ">
+                    Read announcement →
+                </a>
+            </div>
+        </div>
+    {% empty %}
+        <div class="card-panel teal lighten-5" style="border-radius: 8px;">
+            <span class="blue-grey-text text-darken-2">
+                No announcements have been published yet.
+            </span>
+        </div>
+    {% endfor %}
+</section>
+
+{% if is_paginated %}
+    <div class="center-align" style="margin: 32px 0;">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}"
+               class="btn waves-effect waves-light teal">
+                <i class="material-icons left">chevron_left</i>
+                Previous
+            </a>
+        {% endif %}
+
+        <span style="
+            display: inline-block;
+            margin: 0 16px;
+            color: #546e7a;
+            font-size: 0.95rem;
+        ">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}"
+               class="btn waves-effect waves-light teal">
+                Next
+                <i class="material-icons right">chevron_right</i>
+            </a>
+        {% endif %}
+    </div>
+{% endif %}
+
 {% endblock %}

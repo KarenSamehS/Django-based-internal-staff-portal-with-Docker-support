@@ -1,0 +1,30 @@
+
+{% extends "base.html" %}
+
+{% block title %}Announcement Form | StaffConnect{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>
+        {% if object %}
+            Edit Announcement
+        {% else %}
+            Create Announcement
+        {% endif %}
+    </h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit" class="btn teal">
+            Save Announcement
+        </button>
+
+        <a href="{% url 'announcement-list' %}" class="btn-flat">
+            Cancel
+        </a>
+    </form>
+</div>
+{% endblock %}
