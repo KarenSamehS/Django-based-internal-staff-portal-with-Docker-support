@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h4>Log In</h4>
+    <p>Welcome back to StaffConnect.</p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit" class="btn waves-effect waves-light">
+            Log In
+        </button>
+    </form>
+
+    <p>
+        Don't have an account?
+        <a href="{% url 'register' %}">Create an account</a>
+    </p>
+
+    <p>
+        <a href="{% url 'password_reset' %}">Forgot your password?</a>
+    </p>
+</div>
+{% endblock %}

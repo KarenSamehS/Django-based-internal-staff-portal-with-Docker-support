@@ -31,32 +31,48 @@
                     <i class="material-icons">menu</i>
                 </a>
 
-                <ul class="right hide-on-med-and-down">
-                    <li><a href="{% url 'home' %}" class="grey-text text-darken-3">Home</a></li>
-                    <li>
-                        <a href="{% url 'announcement-list' %}" class="grey-text text-darken-3">
-                            Announcements
-                        </a>
-                    </li>
-                    {% if user.is_authenticated %}
-                        <li>
-                            <a href="/users/" class="grey-text text-darken-3">
-                                My Account
-                            </a>
-                        </li>
-                        <li>
-                            <form method="post" action="/users/logout/" class="nav-logout-form">
-                                {% csrf_token %}
-                                <button type="submit" class="btn-flat teal-text text-darken-2">
-                                    Log out
-                                </button>
-                            </form>
-                        </li>
-                    {% else %}
-                        <li><a href="/users/login/" class="grey-text text-darken-3">Log in</a></li>
-                        <li><a href="/users/register/" class="btn waves-effect waves-light teal darken-2">Join StaffConnect</a></li>
-                    {% endif %}
-                </ul>
+<ul class="right hide-on-med-and-down">
+    <li>
+        <a href="{% url 'home' %}" class="grey-text text-darken-3">
+            Home
+        </a>
+    </li>
+
+    <li>
+        <a href="{% url 'announcement-list' %}" class="grey-text text-darken-3">
+            Announcements
+        </a>
+    </li>
+
+    {% if request.user.is_authenticated %}
+        <li>
+            <a href="{% url 'profile' %}" class="grey-text text-darken-3">
+                My Account
+            </a>
+        </li>
+
+        <li>
+            <form method="post" action="{% url 'logout' %}" class="nav-logout-form">
+                {% csrf_token %}
+                <button type="submit" class="btn-flat teal-text text-darken-2">
+                    Log out
+                </button>
+            </form>
+        </li>
+    {% else %}
+        <li>
+            <a href="{% url 'login' %}" class="grey-text text-darken-3">
+                Log In
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'register' %}" class="btn waves-effect waves-light teal darken-2">
+                Join StaffConnect
+            </a>
+        </li>
+    {% endif %}
+</ul>
+
             </div>
         </nav>
 
