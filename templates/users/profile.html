@@ -1,25 +1,87 @@
+
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
-    <h4>My Profile</h4>
+<div class="container" style="max-width: 850px; margin: 40px auto;">
 
-    <p>
-        Welcome, <strong>{{ request.user.username }}</strong>!
-    </p>
+    <div class="card-panel white z-depth-1"
+         style="border-radius: 16px; padding: 32px;">
 
-    <p>
-        <strong>Email:</strong> {{ request.user.email }}
-    </p>
+        <div class="row valign-wrapper" style="margin-bottom: 20px;">
+            <div class="col s12 m8">
+                <h4 style="color: #167D80; margin-top: 0;">
+                    My Profile
+                </h4>
+                <p class="grey-text">
+                    Manage your StaffConnect account information.
+                </p>
+            </div>
+            <div class="col s12 m4 right-align">
+                {% if request.user.profile.avatar %}
+                    <img
+                        src="{{ request.user.profile.avatar.url }}"
+                        alt="Profile avatar"
+                        class="circle"
+                        style="width: 100px; height: 100px;
+                               object-fit: cover;"
+                    >
+                {% endif %}
+            </div>
+        </div>
 
-    <p>
-        <strong>Department:</strong>
-        {{ request.user.profile.department|default:"Not specified" }}
-    </p>
+        <div class="divider"></div>
 
-    <p>
-        <strong>Bio:</strong>
-        {{ request.user.profile.bio|default:"No bio added yet." }}
-    </p>
+        <h6 style="color: #167D80; margin-top: 28px;">
+            Personal Information
+        </h6>
+
+        <div class="row" style="margin-top: 20px;">
+            <div class="col s12 m6">
+                <p class="grey-text text-darken-1">Username</p>
+                <p><strong>{{ request.user.username }}</strong></p>
+            </div>
+
+            <div class="col s12 m6">
+                <p class="grey-text text-darken-1">Email Address</p>
+                <p><strong>{{ request.user.email|default:"Not provided" }}</strong></p>
+            </div>
+
+            <div class="col s12 m6">
+                <p class="grey-text text-darken-1">Department</p>
+                <p>
+                    <strong>
+                        {{ request.user.profile.department|default:"Not specified" }}
+                    </strong>
+                </p>
+            </div>
+
+            <div class="col s12">
+                <p class="grey-text text-darken-1">Bio</p>
+                <p style="overflow-wrap: anywhere;">
+                    {{ request.user.profile.bio|default:"No bio added yet."|linebreaksbr }}
+                </p>
+                {% if request.user.profile.avatar %}
+    <img
+        src="{{ request.user.profile.avatar.url }}"
+        alt="Profile avatar"
+        class="circle"
+        style="width: 100px; height: 100px; object-fit: cover;"
+    >
+{% endif %}
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="right-align" style="margin-top: 24px;">
+            <a href="{% url 'edit-profile' %}"
+               class="btn waves-effect waves-light"
+               style="background-color: #167D80; border-radius: 8px;">
+                <i class="material-icons left">edit</i>
+                Edit Profile
+            </a>
+        </div>
+
+    </div>
 </div>
 {% endblock %}

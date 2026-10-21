@@ -6,6 +6,8 @@ from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django import forms
+from .forms import ProfileForm
+from .models import Profile
 
 
 class UserRegistrationForm(UserCreationForm):
@@ -68,3 +70,33 @@ def logout(request):
 @login_required
 def profile(request):
     return render(request, "users/profile.html")
+
+
+@login_required
+def edit_profile(request):
+    profile, created = Profile.objects.get_or_create(
+        user=request.user
+    )
+
+    if request.method == "POST":
+        form = ProfileForm(
+            request.POST,
+            request.FILES,
+            instance=profile
+        )
+
+        if form.is_valid():
+            form.save()
+            messages.success(
+                request,
+                "Your profile has been updated."
+            )
+            return redirect("profile")
+    else:
+        form = ProfileForm(instance=profile)
+
+    return render(
+        request,
+        "users/edit_profile.html",
+        {"form": form}
+    )

@@ -1,0 +1,85 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container" style="max-width: 850px; margin: 40px auto;">
+
+    <div class="card-panel white z-depth-1"
+         style="border-radius: 16px; padding: 32px;">
+
+        <h4 style="color: #167D80; margin-top: 0;">
+            Edit Profile
+        </h4>
+
+        <p class="grey-text">
+            Update your department, bio, and profile picture.
+        </p>
+
+        <div class="divider" style="margin: 24px 0;"></div>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="card-panel red lighten-5 red-text text-darken-3">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <div class="input-field">
+                {{ form.department.label_tag }}
+                {{ form.department }}
+                {% for error in form.department.errors %}
+                    <span class="red-text">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="input-field">
+                {{ form.bio.label_tag }}
+                {{ form.bio }}
+                {% for error in form.bio.errors %}
+                    <span class="red-text">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="section">
+                <p class="grey-text text-darken-2">
+                    Profile Picture
+                </p>
+
+                {% if request.user.profile.avatar %}
+                    <img
+                        src="{{ request.user.profile.avatar.url }}"
+                        alt="Current profile picture"
+                        class="circle"
+                        style="width: 90px; height: 90px;
+                               object-fit: cover; margin-bottom: 16px;"
+                    >
+                {% endif %}
+
+                <div>
+                    {{ form.avatar }}
+                </div>
+
+                {% for error in form.avatar.errors %}
+                    <span class="red-text">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="divider" style="margin: 24px 0;"></div>
+
+            <button type="submit"
+                    class="btn waves-effect waves-light"
+                    style="background-color: #167D80; border-radius: 8px;">
+                <i class="material-icons left">save</i>
+                Save Changes
+            </button>
+
+            <a href="{% url 'profile' %}" class="btn-flat">
+                Cancel
+            </a>
+        </form>
+
+    </div>
+</div>
+{% endblock %}
