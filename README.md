@@ -172,6 +172,3 @@ The application container runs as the non-root user `appuser`.
 - **GitHub:** https://github.com/KarenSamehS/Django-based-internal-staff-portal-with-Docker-support
 - **Docker Hub:** https://hub.docker.com/r/karensameh48/staffconnect
 
-## License
-
-No license has been specified for this project.
